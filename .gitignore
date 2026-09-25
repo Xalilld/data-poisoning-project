@@ -1,0 +1,22 @@
+# Environnement virtuel Python
+.venv/
+
+# Cache Python
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Données
+data/raw/*.csv
+data/processed/*
+data/poisoned/*
