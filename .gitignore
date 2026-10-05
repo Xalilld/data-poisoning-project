@@ -20,3 +20,6 @@ Thumbs.db
 data/raw/*.csv
 data/processed/*
 data/poisoned/*
+
+# Notes personnelles - uniquement sur ma machine
+notes/
