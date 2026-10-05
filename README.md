@@ -293,3 +293,41 @@ Le dépôt local est ensuite relié à GitHub afin de conserver l'historique du 
 ### Prochaine étape — Baseline propre
 
 La prochaine étape consistera à explorer les données, effectuer un découpage stratifié entraînement/validation/test, préparer le preprocessing puis entraîner une régression logistique et un Random Forest afin d'obtenir les performances de référence.
+
+
+## Semaine 2 — Baseline propre
+
+L'objectif de la semaine 2 est de construire une baseline propre avant l'introduction du data poisoning.
+
+### Étapes réalisées
+
+- Exploration du dataset Bank Marketing
+- Séparation de la variable cible `y`
+- Split stratifié des données :
+  - 70 % entraînement
+  - 15 % validation
+  - 15 % test
+- Prétraitement des variables numériques avec `StandardScaler`
+- Encodage des variables catégorielles avec `OneHotEncoder`
+- Entraînement d'une régression logistique
+- Entraînement d'un Random Forest
+- Évaluation avec :
+  - Accuracy
+  - Balanced Accuracy
+  - Precision
+  - Recall
+  - F1-score
+  - ROC-AUC
+  - Matrice de confusion
+
+### Exécution du livrable
+
+Depuis la racine du projet :
+
+```bash
+python experiments/baseline.py
+```
+
+Le script entraîne les deux modèles sur l'ensemble d'entraînement et les évalue sur l'ensemble de validation.
+
+L'ensemble de test reste intact pour les évaluations finales.
