@@ -331,3 +331,35 @@ python experiments/baseline.py
 Le script entraîne les deux modèles sur l'ensemble d'entraînement et les évalue sur l'ensemble de validation.
 
 L'ensemble de test reste intact pour les évaluations finales.
+
+## Semaine 3 — Génération des attaques de Data Poisoning
+
+L'objectif de la semaine 3 est d'implémenter différentes techniques de data poisoning afin de préparer l'étude de leur impact sur les modèles d'apprentissage automatique.
+
+### Étapes réalisées
+
+- Implémentation de quatre attaques :
+  - P1 : Random Label Flipping (inversion aléatoire des labels)
+  - P2 : Targeted Label Flipping (inversion ciblée des labels `yes` vers `no`)
+  - P3 : Feature Poisoning (modification de la variable `balance`)
+  - P4 : Injection / Duplication (ajout de copies d'observations de la classe `yes`)
+- Application des attaques uniquement sur l'ensemble d'entraînement
+- Expérimentation avec quatre taux : 1 %, 5 %, 10 % et 20 %
+- Réalisation de 16 expériences au total
+- Vérification du nombre d'observations modifiées ou ajoutées
+- Vérification de la préservation des données originales
+- Conservation des ensembles de validation et de test propres
+- Création de tests unitaires pour les quatre attaques
+- Enregistrement des résultats dans `results/csv/poisoning_generation.csv`
+
+### Exécution du livrable
+
+Depuis la racine du projet :
+
+```bash
+python experiments/poisoning_experiments.py
+```
+
+Le script génère les quatre attaques avec différents taux d'empoisonnement et enregistre les résultats dans un fichier CSV.
+
+Les ensembles de validation et de test restent intacts pour les évaluations ultérieures.
