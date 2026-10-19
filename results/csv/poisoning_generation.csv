@@ -1,0 +1,13 @@
+attack,poison_rate,rate_denominator,n_train,n_eligible,n_poisoned,random_state
+P1_random_label_flipping,0.01,all_train,31647,31647,316,42
+P1_random_label_flipping,0.05,all_train,31647,31647,1582,42
+P1_random_label_flipping,0.1,all_train,31647,31647,3165,42
+P1_random_label_flipping,0.2,all_train,31647,31647,6329,42
+P2_targeted_label_flipping,0.01,target_yes,31647,3702,37,42
+P2_targeted_label_flipping,0.05,target_yes,31647,3702,185,42
+P2_targeted_label_flipping,0.1,target_yes,31647,3702,370,42
+P2_targeted_label_flipping,0.2,target_yes,31647,3702,740,42
+P3_feature_poisoning,0.01,all_train,31647,31647,316,42
+P3_feature_poisoning,0.05,all_train,31647,31647,1582,42
+P3_feature_poisoning,0.1,all_train,31647,31647,3165,42
+P3_feature_poisoning,0.2,all_train,31647,31647,6329,42
