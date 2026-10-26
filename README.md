@@ -363,3 +363,33 @@ python experiments/poisoning_experiments.py
 Le script génère les quatre attaques avec différents taux d'empoisonnement et enregistre les résultats dans un fichier CSV.
 
 Les ensembles de validation et de test restent intacts pour les évaluations ultérieures.
+
+## Semaine 4 — Évaluation de l'impact du Data Poisoning
+
+L'objectif de la semaine 4 est de mesurer l'impact des attaques sur les performances des modèles d'apprentissage automatique.
+
+### Étapes réalisées
+
+- Entraînement des modèles Logistic Regression et Random Forest
+- Évaluation des quatre attaques P1, P2, P3 et P4
+- Expérimentation avec quatre taux : 1 %, 5 %, 10 % et 20 %
+- Réalisation de 34 entraînements, dont 2 baselines propres
+- Comparaison des performances avec Accuracy, Balanced Accuracy, Precision, Recall, F1-score et ROC-AUC
+- Analyse des effets des attaques sur les deux modèles
+- Génération de six graphiques comparatifs
+- Enregistrement des résultats dans `results/csv/poisoning_impact.csv`
+
+### Exécution du livrable
+
+Depuis la racine du projet :
+
+```bash
+python experiments/impact_experiments.py
+python experiments/plot_impact.py
+```
+
+Le premier script entraîne et évalue les modèles propres et empoisonnés sur l'ensemble de validation.
+
+Le second script génère les graphiques dans `results/figures/`.
+
+L'ensemble de test reste intact pour les évaluations finales.
