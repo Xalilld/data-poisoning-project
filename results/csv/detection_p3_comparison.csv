@@ -1,0 +1,9 @@
+attack,poison_rate,method,n_poisoned,n_detected,precision,recall,f1
+P3,0.01,Isolation Forest,316,317,0.0,0.0,0.0
+P3,0.01,Repeated High Balance,316,318,0.9937106918238994,1.0,0.9968454258675079
+P3,0.05,Isolation Forest,1582,1583,0.0,0.0,0.0
+P3,0.05,Repeated High Balance,1582,1584,0.9987373737373737,1.0,0.9993682880606444
+P3,0.1,Isolation Forest,3165,3163,0.0,0.0,0.0
+P3,0.1,Repeated High Balance,3165,3167,0.9993684875276286,1.0,0.9996841440303221
+P3,0.2,Isolation Forest,6329,6328,0.0,0.0,0.0
+P3,0.2,Repeated High Balance,6329,6331,0.9996840941399463,1.0,0.9998420221169037
