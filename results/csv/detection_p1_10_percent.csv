@@ -1,0 +1,2 @@
+attack,poison_rate,detector,model,n_poisoned,n_detected,precision,recall,f1,random_state
+P1,0.1,Cleanlab,Logistic Regression,3165,3517,0.7025874324708559,0.7807266982622433,0.7395989224783,42

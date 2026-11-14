@@ -393,3 +393,139 @@ Le premier script entraîne et évalue les modèles propres et empoisonnés sur 
 Le second script génère les graphiques dans `results/figures/`.
 
 L'ensemble de test reste intact pour les évaluations finales.
+
+
+
+## Semaine 5 — Détection statistique du Data Poisoning
+
+### Objectif
+
+Développer une première version d'un système de détection statistique des observations suspectes dans un jeu de données d'apprentissage automatique.
+
+### Méthodes implémentées
+
+- **Isolation Forest** : détection des anomalies à partir de la variable `balance`.
+- **Contrôle des valeurs répétées** : recherche de valeurs élevées anormalement fréquentes.
+- **Détection des doublons** : identification des observations dupliquées.
+
+Le fichier `src/detect.py` centralise ces trois méthodes.
+
+### Résultats expérimentaux
+
+Les expériences utilisent le jeu de données Bank Marketing et les attaques P3 (modification de caractéristiques) et P4 (injection de doublons).
+
+| Attaque | Méthode | Precision | Recall | F1-score |
+|---|---|---:|---:|---:|
+| P3 à 10 % | Isolation Forest, contamination 5 % | 0,0000 | 0,0000 | 0,0000 |
+| P3 à 10 % | Valeurs élevées répétées | 0,9994 | 1,0000 | 0,9997 |
+| P4 à 10 % | Détection des doublons | 1,0000 | 1,0000 | 1,0000 |
+
+### Analyse des scores
+
+L'analyse des distributions de scores montre que les observations empoisonnées par P3 ne franchissent pas le seuil de décision d'Isolation Forest à 10 % d'empoisonnement et 5 % de contamination.
+
+Les performances dépendent donc du type d'attaque et du seuil utilisé.
+
+### Limites
+
+- Les expériences utilisent principalement la graine aléatoire 42.
+- Isolation Forest est appliqué uniquement à la variable `balance`.
+- La détection des valeurs répétées utilise une référence propre et une connaissance de la caractéristique attaquée.
+- La détection des doublons est évaluée sur une attaque simulée qui ajoute des copies exactes.
+- Les résultats ne garantissent pas une performance équivalente sur des attaques inconnues.
+
+### Fichiers principaux
+
+- `src/detect.py` : interface de détection statistique.
+- `src/detection_features.py` : Isolation Forest.
+- `src/detection_repeated_values.py` : contrôle des valeurs élevées répétées.
+- `src/detection_duplicates.py` : détection des doublons.
+- `experiments/plot_detection_week5.py` : génération des graphiques.
+
+### Reproduire les tests
+
+```powershell
+python experiments/test_detect_v1.py
+python experiments/test_detect_p4.py
+python experiments/detection_p3_fixed.py
+python experiments/plot_detection_week5.py
+```
+
+### Graphiques
+
+Les figures sont enregistrées dans `results/figures/` :
+
+- `week5_isolation_fixed.png`
+- `week5_comparison_p3.png`
+- `week5_score_distribution.png`
+
+**Livrable :** `detect.py` version 1, métriques de détection et analyse des distributions de scores.
+
+LOF n'a pas été ajouté, car il est facultatif dans le plan initial.
+
+
+
+## Semaine 6 — Détection basée sur les modèles
+
+### Objectif
+
+Détecter les observations potentiellement empoisonnées en analysant les probabilités prédites par un modèle de machine learning.
+
+### Méthodes implémentées
+
+- **Probabilités out-of-fold** : validation croisée stratifiée à cinq plis avec régression logistique.
+- **Score de cohérence label/prédiction** : score de suspicion calculé à partir de la probabilité attribuée à l'étiquette observée.
+- **Cleanlab** : identification des observations présentant des erreurs potentielles d'étiquetage.
+
+### Expériences
+
+Les deux détecteurs ont été comparés sur les attaques P1 (random label flipping) et P2 (targeted label flipping), aux taux de 1 %, 5 %, 10 % et 20 %.
+
+### Résultats — F1-score
+
+| Attaque | Taux | Cleanlab | Cohérence |
+|---|---:|---:|---:|
+| P1 | 1 % | 0,2681 | 0,1546 |
+| P1 | 5 % | 0,6150 | 0,4755 |
+| P1 | 10 % | 0,7396 | 0,6444 |
+| P1 | 20 % | 0,7902 | 0,7829 |
+| P2 | 1 % | 0,0185 | 0,0082 |
+| P2 | 5 % | 0,0717 | 0,0337 |
+| P2 | 10 % | 0,1368 | 0,0671 |
+| P2 | 20 % | 0,1652 | 0,0907 |
+
+Le tableau complet contenant Precision, Recall, F1 et Average Precision est disponible dans `results/csv/week6_model_comparison.csv`.
+
+### Observations
+
+Cleanlab obtient un meilleur F1-score dans les huit configurations étudiées. L'attaque ciblée P2 est plus difficile à détecter que P1.
+
+Les deux méthodes obtiennent la même Average Precision, car les scores continus utilisés produisent le même classement des observations.
+
+### Limites
+
+Les expériences utilisent principalement une seule graine aléatoire (42), une régression logistique et un seuil de cohérence fixé à 0,50. Les résultats concernent des attaques simulées.
+
+### Fichiers principaux
+
+- `src/detection.py`
+- `experiments/compare_model_detectors.py`
+- `experiments/test_inconsistency.py`
+- `experiments/plot_week6.py`
+- `results/csv/week6_model_comparison.csv`
+
+### Graphiques
+
+- `results/figures/week6_f1_comparison.png`
+- `results/figures/week6_ap_comparison.png`
+- `results/figures/week6_precision_recall.png`
+
+### Reproduction
+
+```powershell
+python experiments/test_inconsistency.py
+python experiments/compare_model_detectors.py
+python experiments/plot_week6.py
+```
+
+**Livrable :** tableau comparatif des détecteurs avec Precision, Recall, F1 et Average Precision (AP, résumé de la courbe précision-rappel).
